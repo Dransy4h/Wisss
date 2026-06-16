@@ -37,25 +37,24 @@
   </head>
   <body id="home">
     
-    <div class="card border-0">
-      <div class="card-header fixed-top bg-dark-subtle">
-        <div class="row align-items-center container-fluid">
-          <div class="col-3 ">
-            <a class="nav-link active" href="tambah.html">
-              <img src="assets/img/imagees.png" class="clickable" alt="GIPAY" style="width:30px">
-            </a>
-          </div>
-          <div class="col-3 ">
-            <a class="nav-link active">
-              <img src="" class="clickable" alt="GIPAY" style="width:30px">
-            </a>
-          </div>
-          <div class="col-3 ">
-            <a class="nav-link active">
-              <img src="assets/img/imagees.png" class="clickable" alt="GIPAY" style="width:30px">
-            </a>
-          </div>
-          <div class="col-3">
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+      <div class="container-fluid px-3 px-lg-5">
+        
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="assets/img/imagees.png" alt="Logo RSC" class="img-logo me-2" style="width: 30px;">
+        </a>
+        
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto text-center mt-3 mt-lg-0 align-items-center gap-2">
+            <li class="nav-item"><a class="nav-link active" href="#home">Beranda</a></li>
+            <li class="nav-item"><a class="nav-link" href="cari.html">Cari</a></li>
+            <li class="nav-item"><a class="nav-link" href="tambah.html">Input Data</a></li>
+            <li class="nav-item"><a class="nav-link" href="semua.html">Semua data</a></li>
+            <li class="nav-item"><a class="nav-link" href="tentang.html">Tentang</a></li>
             <nav class="nav justify-content-end">
               <div class="nav-item dropdown">
                 <button class="btn nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -81,33 +80,17 @@
                 </ul>
               </div>
             </nav>
-          </div>
+          </ul>
         </div>
       </div>
-    </div> 
+    </nav>
+    
     <section class="jumbotron text-center" style="padding-top: 8rem;">
       <h1 class="display-1">WISSS</h1>
       <h2 class="display-4">WIS Sekali Search!</h2>
       
-      <div class="row justify-content-center mt-4">
-        <div class="col-3" style="width: 16rem;">
-          <div class="card border border-dark p-3 shadow">
-            <form onsubmit="event.preventDefault(); cariGangguan();">
-              <div class="mb-2 text-start">
-                <label for="keyword" class="form-label small fw-bold">Cari Gangguan:</label>
-                <input type="text" id="keyword" class="form-control form-control-sm" placeholder="Contoh: x007...">
-              </div>
-              <button type="submit" class="btn btn-primary btn-sm w-100">Cari</button>
-            </form>
-          </div>
-        </div>
-      </div>
 
-      <div class="container mt-4">
-        <div class="row justify-content-center">
-          <div class="col-md-8 text-start" id="hasilPencarian"></div>
-        </div>
-      </div>
+
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path fill="currentColor" class="text-body-bg" fill-opacity="1" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,80C672,64,768,64,864,96C960,128,1056,192,1152,186.7C1248,181,1344,107,1392,69.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>

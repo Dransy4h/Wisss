@@ -35,12 +35,11 @@
 
     <title>Wisss</title>
   </head>
-  <body id="home">
-    
+  <body id="home" style="background: url(assets/img/images.pn);">
     <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
       <div class="container-fluid px-3 px-lg-5">
         
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <a class="navbar-brand d-flex align-items-center" href="#home">
             <img src="assets/img/imagees.png" alt="Logo RSC" class="img-logo me-2" style="width: 30px;">
         </a>
         
@@ -48,15 +47,17 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto text-center mt-3 mt-lg-0 align-items-center gap-2">
-            <li class="nav-item"><a class="nav-link active" href="#home">Beranda</a></li>
-            <li class="nav-item"><a class="nav-link" href="cari.html">Cari</a></li>
-            <li class="nav-item"><a class="nav-link" href="tambah.html">Input Data</a></li>
-            <li class="nav-item"><a class="nav-link" href="semua.html">Semua data</a></li>
-            <li class="nav-item"><a class="nav-link" href="tentang.html">Tentang</a></li>
-            <nav class="nav justify-content-end">
-              <div class="nav-item dropdown">
+          <div class="collapse collapse-horizontal" id="navbarNav">
+            <div style="width: 250px;"> 
+              <ul class="navbar-nav ms-auto text-start mt-3 mt-lg-0 align-items-lg-center gap-2">
+                <li class="nav-item"><a class="nav-link active" href="#home">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link" href="cari.html">Cari</a></li>
+                <li class="nav-item"><a class="nav-link" href="tambah.html">T</a></li>
+                <li class="nav-item"><a class="nav-link" href="#programs">Semua data</a></li>
+                <li class="nav-item"><a class="nav-link" href="tentang.html">Fasilitas</a></li>
+              </ul>
+            </div>
+             <div class="nav-item dropdown">
                 <button class="btn nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="bi bi-sun theme-icon-active" data-theme-icon-active="bi-sun"></i>
                 </button>
@@ -83,37 +84,79 @@
           </ul>
         </div>
       </div>
+          </div>
+
+            </nav>
+          </ul>
+        </div>
+      </div>
     </nav>
     
+
     <section class="jumbotron text-center" style="padding-top: 8rem;">
       <h1 class="display-1">WISSS</h1>
       <h2 class="display-4">WIS Sekali Search!</h2>
       
+    </section>
 
-
+<p class="display-5">Winder Inverter System(WIS) adalah sistem kontrol penggerak motor (menggunakan inverter) yang dirancang khusus untuk mengatur proses penggulungan (winder) atau pelepasan (unwinder) gulungan material.
+   Sistem ini umum digunakan pada industri tekstil, pengemasan (kertas/plastik), manufaktur kabel, dan pengolahan logam. Fungsi dan Cara KerjaSistem ini menggunakan Variable Frequency Drive (VFD) atau inverter untuk mengatur kecepatan motor.
+    Fungsi utamanya meliputi:Kontrol Tegangan (Tension Control): Menjaga ketegangan material (seperti benang, kertas, atau foil) agar tetap konstan saat digulung, sehingga tidak mudah putus atau terlalu kendur.Penyesuaian Diameter Otomatis: Saat gulungan membesar, inverter secara otomatis menurunkan kecepatan putaran motor (RPM) agar kecepatan linear material tetap stabil.Operasi yang Mulus: Mencegah hentakan atau tarikan tiba-tiba pada awal maupun akhir proses penggulungan.</p>
       
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+<div class="card mb-3">
+  <img src="assets/img/i.png" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">Inverter adalah rangkaian elektronik daya yang digunakan untuk mengonversikan tegangan searah (DC) ke suatu tegangan bolak-balik (AC). Ada beberapa jenis inverter yang ada sekarang ini, dari yang hanya menghasilkan tegangan keluaran kotak bolak-balik, sampai yang sudah bisa menghasilkan tegangan sinus murni tanp harmonisa. Inverter satu phasa, tiga phasa sampai dengan multi phasa dan ada juga yang namanya inverter multi level.
+Ada beberapa cara teknik kendali yang digunakan agar inverter mampu menghasilkan sinyal sinusoidal, yang paling sederhana adalah dengan cara mengatur keterlambatan sudut penyalaan inverter di tiap lengannya.
+Rumus dasar dari Inverter Barmag WIS: 
+
+<img src="assets/img/120.png" alt="" style="width: 120px;">
+
+ <h5 class="text-center"><small>dimana:	n = Putaran (RPM)
+	F = Frekuensi (Hz)
+  P = Pole (jumlah kutub motor 2 atau 4)
+	120 = Konstanta</small>
+ </h5>
+    </p>
+  </div>
+</div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path fill="currentColor" class="text-body-bg" fill-opacity="1" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,80C672,64,768,64,864,96C960,128,1056,192,1152,186.7C1248,181,1344,107,1392,69.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
       </svg> 
-    </section>
-
-    <section id="about" class="py-5 bg-body-tertiary">
-      <div class="container">
-        <div class="row text-center mb-3">
-          <div class="col" data-aos="fade-down">
-            <h2>About Wisss</h2>
-          </div>
-        </div>
-        <div class="row justify-content-center fs-5 text-center">
-          <div class="col-md-4" data-aos="fade-right">
-              Sistem ini adalah sebuah Aplikasi Web Pencarian Data Gangguan dan Perbaikan Inverter Berbasis Client-Side (Serverless). Aplikasi ini dirancang untuk memudahkan teknisi atau pengguna dalam mencari langkah penanganan teknis (Tindakan Perbaikan) secara instan hanya dengan memasukkan kata kunci kode atau nama kerusakan (Jenis Gangguan).</p>
-          </div>
-          <div class="col-md-4" data-aos="fade-left">
-            <p>Mantap</p>
-          </div>
-        </div>
+      <div class="card">
+        <h5>Bagian-bagian Inverter BARMAG WIS</h5>
+        <img src="assets/img/d.png" alt="">
       </div>
-    </section>
+      <div class="card">
+        <h5>Rectifier (penyearah) tiga phasa</h5>
+        <p>Inverter Barmag 4 kVA menggunakan rectifier 3 phasa karena inverter merupakan salah satu aplikasi yang menggunakan tegangan tinggi. balik (AC) menjadi sinyal sumber arus searah (DC). Gelombang AC yang berbentuk 
+          gelombang sinus dapat dilihat dengan alat ukur oscilloscope.</p>
+          <img src="assets/img/power97.webp" alt="" style="width: 500px;">
+          <p class="text-align">Penyearah tiga fasa gelombang penuh tak terkendali ini bekerja menggunakan 6 buah dioda yang disusun dalam konfigurasi jembatan (bridge). Sistem ini memiliki efisiensi sangat tinggi mencapai sekitar 99,8% karena mampu memanfaatkan seluruh siklus gelombang input AC secara optimal. 
+            Dalam proses konversinya, konfigurasi ini menghasilkan frekuensi ripple berupa 6 pulsa DC per satu siklus input AC, yang membuat tegangan keluarannya jauh lebih rata. Besar tegangan output DC rata-rata tersebut dapat dihitung secara akurat menggunakan rumus:</p>
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+    <img src="assets/img/Untitledd.png" alt="" style="width: 170px;">
+    <p>di mana (V_{m}) merupakan nilai dari tegangan puncak fasa ke netral.</p>
+            </div>
+      </div>
+      <div class="card">
+        <h5>DC Bus</h5>
+        <p>	Komponen DC Bus terdiri atas electrolit condensor (ELCO) dengan kapasitas dan rating tegangan yang sesuai dengan kapasitas dari inverter. Tegangan DC yang dihasilkan oleh rectifier akan di filter sehingga dihasilkan tegangan DC yang lebih murni tanpa ada noise atau cacat. Elco pada DC Bus berfungsi menyimpan muatan listrik yang telah disearahkan oleh rectifier. Penyimpanan muatan listrik pada DC Bus bertujuan agar ketika tegangan DC ini digunakan, akan lebih stabil tidak akan secara langsung membebani bagian rectifier. </p>
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <img src="assets/img/dcc.png" alt="">
+        </div>
+        <p>Penyimpanan listrik pada elco dapat diibaratkan sebagai penyimpanan tangki air. Tanpa penampungan, aliran air langsung dari sumber akan mengecil dan membebani sumber itu sendiri. 
+Begitu pula dengan mekanisme yang terjadi pada DC Bus ini.
+<p>Besarnya muatan listrik yang disimpan di dalam kapasitor adalah:
+		Q = C x V 	
+Dengan keterangan
+Q = Nilai muatan elektron listrik dalam satuan coulumb (C).
+C = Nilai kapasitansi dalam satuan (F).
+V = Besar tegangan dalam satuan Volt (V).</p>
+	Tegangan DC link yang disimpan kurang lebih 560 VDC, sehigga inverter aman untuk dioperasikan.
+</p>
+      </div>
     <footer class="text-center py-4">
       <p>Created with <i class="bi bi-heart-fill text-danger"></i> by Tim 5</p>
     </footer>
@@ -122,70 +165,147 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
 
-    <script>
-        const sheetId = '1dcO7kOygkZDbYmc8Jx28UfTLFuIVgo4pXuSTAeYnzxI';
-        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+  <script>
+      const sheetId = '1dcO7kOygkZDbYmc8Jx28UfTLFuIVgo4pXuSTAeYnzxI';
+      const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+      
+      // GANTI INI dengan URL Aplikasi Web dari Google Apps Script kamu!
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycbyBD1djuDFui7iR7_qvsdKoQfZ4KJGrZ96SmEuXOjG0NsSfq31Hwpnzge_w7rsKYVrGvg/exec'; 
+      
+      let dataGangguan = []; 
 
-        function cariGangguan() {
-            const keyword = document.getElementById('keyword').value.toLowerCase().trim();
-            const hasilDiv = document.getElementById('hasilPencarian');
-            
-            if (!keyword) {
-                hasilDiv.innerHTML = "<p style='color:red;'>Silakan masukkan kata kunci terlebih dahulu.</p>";
-                return;
-            }
+      function escapeHTML(str) {
+          return str.replace(/[&<>'"]/g, 
+              tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+          );
+      }
 
-            hasilDiv.innerHTML = "<p>Sedang mencari data...</p>";
+      // FUNGSI BARU: Untuk menyimpan data ke Google Sheets
+      function tambahData(event) {
+          event.preventDefault();
+          
+          const btnSubmit = document.getElementById('btnSubmit');
+          const btnText = document.getElementById('btnText');
+          const statusInput = document.getElementById('statusInput');
+          
+          // Kunci tombol agar tidak diklik dua kali saat proses kirim
+          btnSubmit.disabled = true;
+          btnText.innerText = "Menyimpan data...";
+          statusInput.innerHTML = "";
 
-            Papa.parse(csvUrl, {
-                download: true,
-                header: false,
-                complete: function(results) {
-                    const rows = results.data;
-                    let htmlOutput = "";
-                    let ditemukan = false;
+          // Ambil data dari form
+          const no = document.getElementById('inputNo').value.trim();
+          const jenis = document.getElementById('inputJenis').value.trim();
+          const tindakan = document.getElementById('inputTindakan').value.trim();
+          const foto = document.getElementById('inputFoto').value.trim();
 
-                    htmlOutput += `<table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 10%;">No</th>
-                                            <th>Jenis Gangguan</th>
-                                            <th>Tindakan Perbaikan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>`;
+          // Mengirim data menggunakan metode POST
+          fetch(webAppUrl, {
+              method: 'POST',
+              mode: 'no-cors', // Solusi bypass CORS policy Google Apps Script
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({ 'no': no, 'jenis': jenis, 'tindakan': tindakan, 'foto': foto })
+          })
+          .then(() => {
+              statusInput.innerHTML = `<div class="alert alert-success">Selesai! Data berhasil disimpan ke Google Sheets.</div>`;
+              document.getElementById('formTambahData').reset();
+              
+              // Reset cache data lokal agar pencarian berikutnya mengambil data yang paling baru
+              dataGangguan = []; 
+          })
+          .catch(error => {
+              statusInput.innerHTML = `<div class="alert alert-danger">Terjadi kesalahan: ${error.message}</div>`;
+          })
+          .finally(() => {
+              btnSubmit.disabled = false;
+              btnText.innerText = "Simpan Data";
+          });
+      }
 
-                    for (let i = 1; i < rows.length; i++) {
-                        const row = rows[i];
-                        if (row.length < 2) continue; 
+      function cariGangguan() {
+          const keyword = document.getElementById('keyword').value.toLowerCase().trim();
+          const hasilDiv = document.getElementById('hasilPencarian');
+          
+          if (!keyword) {
+              hasilDiv.innerHTML = "<p style='color:red;'>Silakan masukkan kata kunci terlebih dahulu.</p>";
+              return;
+          }
 
-                        const no = row[0] || '';
-                        const jenisGangguan = row[1] || '';
-                        const tindakanPerbaikan = row[2] || '';
+          if (dataGangguan.length > 0) {
+              lakukanPencarian(keyword, hasilDiv);
+              return;
+          }
 
-                        if (jenisGangguan.toLowerCase().includes(keyword)) {
-                            ditemukan = true;
-                            htmlOutput += `<tr>
-                                            <td class="text-center">${no}</td>
-                                            <td>${jenisGangguan}</td>
-                                            <td>${tindakanPerbaikan}</td>
-                                           </tr>`;
-                        }
-                    }
+          hasilDiv.innerHTML = "<p>Sedang mengambil data terbaru...</p>";
 
-                    htmlOutput += `</tbody></table>`;
+          Papa.parse(csvUrl, {
+              download: true,
+              header: false,
+              complete: function(results) {
+                  dataGangguan = ExtrakValidData(results.data);
+                  lakukanPencarian(keyword, hasilDiv);
+              },
+              error: function(err) {
+                  hasilDiv.innerHTML = `<div class="alert alert-danger">Gagal mengambil data dari Google Sheets.</div>`;
+              }
+          });
+      }
 
-                    if (ditemukan) {
-                        hasilDiv.innerHTML = `<h4 class="mt-3">Hasil Pencarian untuk: <em>'${keyword}'</em></h4>` + htmlOutput;
-                    } else {
-                        hasilDiv.innerHTML = `<div class="alert alert-warning mt-3">Data gangguan dengan kata kunci <strong>'${keyword}'</strong> tidak ditemukan.</div>`;
-                    }
-                },
-                error: function(err) {
-                    hasilDiv.innerHTML = `<div class="alert alert-danger">Gagal mengambil data dari Google Sheets. Pastikan akses tautan diatur ke 'Siapa saja'.</div>`; }
-            });
-        }
-    </script>
+      // Membersihkan baris kosong otomatis dari Google Sheets
+      function ExtrakValidData(data) {
+          return data.filter(row => row.length > 0 && row[0] !== "");
+      }
+
+      function lakukanPencarian(keyword, hasilDiv) {
+          let htmlOutput = "";
+          let ditemukan = false;
+
+          htmlOutput += `<table class="table table-bordered table-striped align-middle">
+                          <thead>
+                              <tr>
+                                  <th style="width: 8%;">No</th>
+                                  <th>Jenis Gangguan</th>
+                                  <th>Tindakan Perbaikan</th>
+                                  <th style="width: 15%;" class="text-center">Detail Foto</th>
+                              </tr>
+                          </thead>
+                          <tbody>`;
+
+          for (let i = 1; i < dataGangguan.length; i++) {
+              const row = dataGangguan[i];
+              const no = escapeHTML(row[0] || '');
+              const jenisGangguan = escapeHTML(row[1] || '');
+              const tindakanPerbaikan = escapeHTML(row[2] || '');
+              const fotoUrl = row[3] ? row[3].trim() : ''; 
+
+              if (jenisGangguan.toLowerCase().includes(keyword)) {
+                  ditemukan = true;
+                  
+                  let tombolFoto = '';
+                  if (fotoUrl && fotoUrl.startsWith('http')) {
+                      tombolFoto = `<a href="${fotoUrl}" target="_blank" class="btn btn-primary btn-sm">Lihat Detail</a>`;
+                  } else {
+                      tombolFoto = `<button class="btn btn-secondary btn-sm" disabled>No Foto</button>`;
+                  }
+
+                  htmlOutput += `<tr>
+                                  <td class="text-center">${no}</td>
+                                  <td>${jenisGangguan}</td>
+                                  <td>${tindakanPerbaikan}</td>
+                                  <td class="text-center">${tombolFoto}</td>
+                                </tr>`;
+              }
+          }
+
+          htmlOutput += `</tbody></table>`;
+
+          if (ditemukan) {
+              hasilDiv.innerHTML = `<h4 class="mt-3">Hasil Pencarian untuk: <em>'${escapeHTML(keyword)}'</em></h4>` + htmlOutput;
+          } else {
+              hasilDiv.innerHTML = `<div class="alert alert-warning mt-3">Data tidak ditemukan.</div>`;
+          }
+      }
+  </script>
 
     <script>
       (() => {

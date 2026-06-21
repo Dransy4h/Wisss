@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang - WISSS Inverter Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        body {
+            padding-top: 5rem;
+        }
+        .clickable {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .clickable:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-body-secondary">
+
+    <div class="card-header fixed-top bg-dark-subtle border-bottom border-secondary-subtle shadow-sm py-2">
+        <div class="row align-items-center container-fluid mx-auto">
+            <div class="col-3">
+                <a href="index.html" class="nav-link p-0 d-flex align-items-center">
+                    <img src="assets/img/imagees.png" class="clickable me-2" alt="GIPAY" style="width: 32px; height: 32px; object-fit: contain;" onerror="this.style.display='none'; document.getElementById('logoText').classList.remove('d-none');">
+                    <span id="logoText" class="fw-bold text-body d-none">WISSS</span>
+                </a>
+            </div>
+            <div class="col-9">
+                <nav class="nav justify-content-end align-items-center gap-3">
+                    <a href="index.html" class="nav-link text-body small fw-semibold"><i class="bi bi-house-door-fill me-1"></i> Home</a>
+                    
+                    <div class="nav-item dropdown">
+                        <button class="btn nav-link dropdown-toggle p-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-sun theme-icon-active" data-theme-icon-active="bi-sun"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <li>
+                                <button class="dropdown-item d-flex align-items-center" type="button" data-bs-theme-value="light">
+                                    <i class="bi bi-sun me-2 opacity-50" data-theme-icon="bi-sun"></i> Light
+                                </button>
+                            </li>
+                            <li> 
+                                <button class="dropdown-item d-flex align-items-center" type="button" data-bs-theme-value="dark">
+                                    <i class="bi bi-moon-fill me-2 opacity-50" data-theme-icon="bi-moon-fill"></i> Dark
+                                </button>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <button class="dropdown-item d-flex align-items-center" type="button" data-bs-theme-value="auto">
+                                    <i class="bi bi-circle-half me-2 opacity-50" data-theme-icon="bi-circle-half"></i> Auto
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <section id="about" class="py-5 bg-body-tertiary min-vh-100 d-flex align-items-center">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col" data-aos="fade-down">
+                    <h2 class="display-5 fw-bold text-primary">About</h2>
+                    <h2 class="display-5 fw-bold text-primary">WISSS!</h2>
+                    <p class="text-muted lead">Winder Inverter System Sekali Search!</p>
+                    <div class="mx-auto bg-primary" style="width: 60px; height: 3px; border-radius: 2px;"></div>
+                </div>
+            </div>
+            <div class="row justify-content-center fs-5 text-center g-4">
+                <div class="col-md-5" data-aos="fade-right">
+                    <div class="p-4 border rounded-3 bg-body shadow-sm h-100">
+                        <div class="text-primary mb-3"><i class="bi bi-cpu fs-1"></i></div>
+                        <div class="container">
+        <div class="row text-center mb-3">
+       
+        <div class="row justify-content-center fs-5 text-center">
+          <div class="col-md-4" data-aos="fade-right">
+              Sistem ini adalah sebuah Aplikasi Web Pencarian Data Gangguan dan Perbaikan Inverter Berbasis Client-Side (Serverless). Aplikasi ini dirancang untuk memudahkan teknisi atau pengguna dalam mencari langkah penanganan teknis (Tindakan Perbaikan) secara instan hanya dengan memasukkan kata kunci kode atau nama kerusakan (Jenis Gangguan).</p>
+          </div>
+          <div class="col-md-4" data-aos="fade-left">
+            <p> Mantap</p>
+          </div>
+        </div>
+      </div>
+            </div>
+                    </div>
+                </div>
+              
+            
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-3 border-top border-secondary">
+        <p class="m-0 small">&copy; 2026 WISSS Inverter Search Project. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Mengaktifkan Efek Animasi AOS saat Halaman Di-scroll
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Logika Sinkronisasi Dark/Light Mode Switcher
+        const storedTheme = localStorage.getItem('theme') || 'auto';
+        const getPreferredTheme = () => {
+            if (storedTheme !== 'auto') return storedTheme;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        
+        const setTheme = theme => {
+            if (theme === 'auto') {
+                document.documentElement.setAttribute('data-bs-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme);
+            }
+        }
+        setTheme(getPreferredTheme());
+
+        document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const theme = toggle.getAttribute('data-bs-theme-value');
+                localStorage.setItem('theme', theme);
+                setTheme(theme);
+            });
+        });
+    </script>
+</body>
+</html>

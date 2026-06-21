@@ -52,9 +52,9 @@
               <ul class="navbar-nav ms-auto text-start mt-3 mt-lg-0 align-items-lg-center gap-2">
                 <li class="nav-item"><a class="nav-link active" href="#home">Beranda</a></li>
                 <li class="nav-item"><a class="nav-link" href="cari.html">Cari</a></li>
-                <li class="nav-item"><a class="nav-link" href="tambah.html">T</a></li>
-                <li class="nav-item"><a class="nav-link" href="#programs">Semua data</a></li>
-                <li class="nav-item"><a class="nav-link" href="tentang.html">Fasilitas</a></li>
+                <li class="nav-item"><a class="nav-link" href="tambah.html">Input Data</a></li>
+                <li class="nav-item"><a class="nav-link" href="semua.html">Semua Data</a></li>
+                <li class="nav-item"><a class="nav-link" href="tentang.html">Tentang</a></li>
               </ul>
             </div>
              <div class="nav-item dropdown">
@@ -85,12 +85,6 @@
         </div>
       </div>
           </div>
-
-            </nav>
-          </ul>
-        </div>
-      </div>
-    </nav>
     
 
     <section class="jumbotron text-center" style="padding-top: 8rem;">
@@ -165,147 +159,6 @@ V = Besar tegangan dalam satuan Volt (V).</p>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
 
-  <script>
-      const sheetId = '1dcO7kOygkZDbYmc8Jx28UfTLFuIVgo4pXuSTAeYnzxI';
-      const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
-      
-      // GANTI INI dengan URL Aplikasi Web dari Google Apps Script kamu!
-      const webAppUrl = 'https://script.google.com/macros/s/AKfycbyBD1djuDFui7iR7_qvsdKoQfZ4KJGrZ96SmEuXOjG0NsSfq31Hwpnzge_w7rsKYVrGvg/exec'; 
-      
-      let dataGangguan = []; 
-
-      function escapeHTML(str) {
-          return str.replace(/[&<>'"]/g, 
-              tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-          );
-      }
-
-      // FUNGSI BARU: Untuk menyimpan data ke Google Sheets
-      function tambahData(event) {
-          event.preventDefault();
-          
-          const btnSubmit = document.getElementById('btnSubmit');
-          const btnText = document.getElementById('btnText');
-          const statusInput = document.getElementById('statusInput');
-          
-          // Kunci tombol agar tidak diklik dua kali saat proses kirim
-          btnSubmit.disabled = true;
-          btnText.innerText = "Menyimpan data...";
-          statusInput.innerHTML = "";
-
-          // Ambil data dari form
-          const no = document.getElementById('inputNo').value.trim();
-          const jenis = document.getElementById('inputJenis').value.trim();
-          const tindakan = document.getElementById('inputTindakan').value.trim();
-          const foto = document.getElementById('inputFoto').value.trim();
-
-          // Mengirim data menggunakan metode POST
-          fetch(webAppUrl, {
-              method: 'POST',
-              mode: 'no-cors', // Solusi bypass CORS policy Google Apps Script
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: new URLSearchParams({ 'no': no, 'jenis': jenis, 'tindakan': tindakan, 'foto': foto })
-          })
-          .then(() => {
-              statusInput.innerHTML = `<div class="alert alert-success">Selesai! Data berhasil disimpan ke Google Sheets.</div>`;
-              document.getElementById('formTambahData').reset();
-              
-              // Reset cache data lokal agar pencarian berikutnya mengambil data yang paling baru
-              dataGangguan = []; 
-          })
-          .catch(error => {
-              statusInput.innerHTML = `<div class="alert alert-danger">Terjadi kesalahan: ${error.message}</div>`;
-          })
-          .finally(() => {
-              btnSubmit.disabled = false;
-              btnText.innerText = "Simpan Data";
-          });
-      }
-
-      function cariGangguan() {
-          const keyword = document.getElementById('keyword').value.toLowerCase().trim();
-          const hasilDiv = document.getElementById('hasilPencarian');
-          
-          if (!keyword) {
-              hasilDiv.innerHTML = "<p style='color:red;'>Silakan masukkan kata kunci terlebih dahulu.</p>";
-              return;
-          }
-
-          if (dataGangguan.length > 0) {
-              lakukanPencarian(keyword, hasilDiv);
-              return;
-          }
-
-          hasilDiv.innerHTML = "<p>Sedang mengambil data terbaru...</p>";
-
-          Papa.parse(csvUrl, {
-              download: true,
-              header: false,
-              complete: function(results) {
-                  dataGangguan = ExtrakValidData(results.data);
-                  lakukanPencarian(keyword, hasilDiv);
-              },
-              error: function(err) {
-                  hasilDiv.innerHTML = `<div class="alert alert-danger">Gagal mengambil data dari Google Sheets.</div>`;
-              }
-          });
-      }
-
-      // Membersihkan baris kosong otomatis dari Google Sheets
-      function ExtrakValidData(data) {
-          return data.filter(row => row.length > 0 && row[0] !== "");
-      }
-
-      function lakukanPencarian(keyword, hasilDiv) {
-          let htmlOutput = "";
-          let ditemukan = false;
-
-          htmlOutput += `<table class="table table-bordered table-striped align-middle">
-                          <thead>
-                              <tr>
-                                  <th style="width: 8%;">No</th>
-                                  <th>Jenis Gangguan</th>
-                                  <th>Tindakan Perbaikan</th>
-                                  <th style="width: 15%;" class="text-center">Detail Foto</th>
-                              </tr>
-                          </thead>
-                          <tbody>`;
-
-          for (let i = 1; i < dataGangguan.length; i++) {
-              const row = dataGangguan[i];
-              const no = escapeHTML(row[0] || '');
-              const jenisGangguan = escapeHTML(row[1] || '');
-              const tindakanPerbaikan = escapeHTML(row[2] || '');
-              const fotoUrl = row[3] ? row[3].trim() : ''; 
-
-              if (jenisGangguan.toLowerCase().includes(keyword)) {
-                  ditemukan = true;
-                  
-                  let tombolFoto = '';
-                  if (fotoUrl && fotoUrl.startsWith('http')) {
-                      tombolFoto = `<a href="${fotoUrl}" target="_blank" class="btn btn-primary btn-sm">Lihat Detail</a>`;
-                  } else {
-                      tombolFoto = `<button class="btn btn-secondary btn-sm" disabled>No Foto</button>`;
-                  }
-
-                  htmlOutput += `<tr>
-                                  <td class="text-center">${no}</td>
-                                  <td>${jenisGangguan}</td>
-                                  <td>${tindakanPerbaikan}</td>
-                                  <td class="text-center">${tombolFoto}</td>
-                                </tr>`;
-              }
-          }
-
-          htmlOutput += `</tbody></table>`;
-
-          if (ditemukan) {
-              hasilDiv.innerHTML = `<h4 class="mt-3">Hasil Pencarian untuk: <em>'${escapeHTML(keyword)}'</em></h4>` + htmlOutput;
-          } else {
-              hasilDiv.innerHTML = `<div class="alert alert-warning mt-3">Data tidak ditemukan.</div>`;
-          }
-      }
-  </script>
 
     <script>
       (() => {

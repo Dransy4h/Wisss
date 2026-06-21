@@ -31,7 +31,7 @@
     </style>
     <link rel="stylesheet" href="style.css" />
 
-    <title>Gi-Pay - Cari Gangguan</title>
+    <title>Cari Gangguan</title>
   </head>
   <body id="cariPage">
     
@@ -109,72 +109,109 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
-    <script>
-        const sheetId = '1dcO7kOygkZDbYmc8Jx28UfTLFuIVgo4pXuSTAeYnzxI';
-        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+<script>
+    const sheetId = '1dcO7kOygkZDbYmc8Jx28UfTLFuIVgo4pXuSTAeYnzxI';
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+    
+    let dataGangguan = []; 
 
-        function cariGangguan() {
-            const keyword = document.getElementById('keyword').value.toLowerCase().trim();
-            const hasilDiv = document.getElementById('hasilPencarian');
-            
-            if (!keyword) {
-                hasilDiv.innerHTML = `<p style="color:red;">Silakan masukkan kata kunci terlebih dahulu.</p>`;
-                return;
-            }
+    // Fungsi pencegah XSS
+    function escapeHTML(str) {
+        return str.replace(/[&<>'"]/g, 
+            tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+        );
+    }
 
-            hasilDiv.innerHTML = `<p>Sedang mencari data...</p>`;
-
-            Papa.parse(csvUrl, {
-                download: true,
-                header: false,
-                complete: function(results) {
-                    const rows = results.data;
-                    let htmlOutput = "";
-                    let ditemukan = false;
-
-                    htmlOutput += `<table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 10%;">No</th>
-                                            <th>Jenis Gangguan</th>
-                                            <th>Tindakan Perbaikan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>`;
-
-                    for (let i = 1; i < rows.length; i++) {
-                        const row = rows[i];
-                        if (row.length < 2) continue; 
-
-                        const no = row[0] || '';
-                        const jenisGangguan = row[1] || '';
-                        const tindakanPerbaikan = row[2] || '';
-
-                        if (jenisGangguan.toLowerCase().includes(keyword)) {
-                            ditemukan = true;
-                            htmlOutput += `<tr>
-                                            <td class="text-center">${no}</td>
-                                            <td>${jenisGangguan}</td>
-                                            <td>${tindakanPerbaikan}</td>
-                                           </tr>`;
-                        }
-                    }
-
-                    htmlOutput += `</tbody></table>`;
-
-                    if (ditemukan) {
-                        hasilDiv.innerHTML = `<h4 class="mt-3">Hasil Pencarian untuk: <em>'${keyword}'</em></h4>` + htmlOutput;
-                    } else {
-                        hasilDiv.innerHTML = `<div class="alert alert-warning mt-3">Data gangguan dengan kata kunci <strong>'${keyword}'</strong> tidak ditemukan.</div>`;
-                    }
-                },
-                error: function(err) {
-                    // Menggunakan backtick ( ` ) untuk menghindari quote collision error
-                    hasilDiv.innerHTML = `<div class="alert alert-danger">Gagal mengambil data dari Google Sheets. Pastikan akses tautan diatur ke 'Siapa saja'.</div>`;
-                }
-            });
+    function cariGangguan() {
+        const keyword = document.getElementById('keyword').value.toLowerCase().trim();
+        const hasilDiv = document.getElementById('hasilPencarian');
+        
+        if (!keyword) {
+            hasilDiv.innerHTML = "<p style='color:red;'>Silakan masukkan kata kunci terlebih dahulu.</p>";
+            return;
         }
-    </script>
+
+        if (dataGangguan.length > 0) {
+            lakukanPencarian(keyword, hasilDiv);
+            return;
+        }
+
+        hasilDiv.innerHTML = "<p>Sedang mengambil data...</p>";
+
+        Papa.parse(csvUrl, {
+            download: true,
+            header: false,
+            complete: function(results) {
+                dataGangguan = results.data;
+                lakukanPencarian(keyword, hasilDiv);
+            },
+            error: function(err) {
+                hasilDiv.innerHTML = `<div class="alert alert-danger">Gagal mengambil data dari Google Sheets. Pastikan akses tautan diatur ke 'Siapa saja'.</div>`;
+            }
+        });
+    }
+
+    function lakukanPencarian(keyword, hasilDiv) {
+        let htmlOutput = "";
+        let ditemukan = false;
+
+        htmlOutput += `<table class="table table-bordered table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th style="width: 8%;">No</th>
+                                <th>Jenis Gangguan</th>
+                                <th>Tindakan Perbaikan</th>
+                                <th style="width: 15%;" class="text-center">Detail Foto</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+        for (let i = 1; i < dataGangguan.length; i++) {
+            const row = dataGangguan[i];
+            if (row.length < 2) continue; 
+
+            const no = escapeHTML(row[0] || '');
+            const jenisGangguan = escapeHTML(row[1] || '');
+            const tindakanPerbaikan = escapeHTML(row[2] || '');
+            
+            // Kolom ke-4 (Indeks 3) di Google Sheets dianggap sebagai Link Foto
+            const fotoUrl = row[3] ? row[3].trim() : ''; 
+
+            if (jenisGangguan.toLowerCase().includes(keyword)) {
+                ditemukan = true;
+                
+                let tombolFoto = '';
+                // Validasi apakah ada link foto yang valid
+                if (fotoUrl && fotoUrl.startsWith('http')) {
+                    // Jika ada foto, tombol berupa link aktif ke tab baru
+                    tombolFoto = `<a href="${fotoUrl}" target="_blank" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-image"></i> Lihat Detail
+                                  </a>`;
+                } else {
+                    // Jika tidak ada foto, tombol otomatis mati (disabled)
+                    tombolFoto = `<button class="btn btn-secondary btn-sm" disabled>
+                                    <i class="bi bi-image-alt"></i> No Foto
+                                  </button>`;
+                }
+
+                htmlOutput += `<tr>
+                                <td class="text-center">${no}</td>
+                                <td>${jenisGangguan}</td>
+                                <td>${tindakanPerbaikan}</td>
+                                <td class="text-center">${tombolFoto}</td>
+                               </tr>`;
+            }
+        }
+
+        htmlOutput += `</tbody></table>`;
+
+        if (ditemukan) {
+            hasilDiv.innerHTML = `<h4 class="mt-3">Hasil Pencarian untuk: <em>'${escapeHTML(keyword)}'</em></h4>` + htmlOutput;
+        } else {
+            hasilDiv.innerHTML = `<div class="alert alert-warning mt-3">Data gangguan dengan kata kunci <strong>'${escapeHTML(keyword)}'</strong> tidak ditemukan.</div>`;
+        }
+    }
+</script>
 
     <script>
       (() => {

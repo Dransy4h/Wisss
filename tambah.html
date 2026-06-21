@@ -11,7 +11,47 @@
 <body>
 
 <div class="container mt-5">
-    <a href="index.html" class="btn btn-secondary btn-sm mb-3"><i class="bi bi-arrow-left"></i> Kembali</a>
+    <div class="card border-0">
+      <div class="card-header fixed-top bg-dark-subtle">
+        <div class="row align-items-center container-fluid">
+          <div class="col-3">
+            <a href="index.html" class="nav-link active">
+              <img src="assets/img/imagees.png" class="clickable" alt="GIPAY" style="width: 32px; height: 32px; object-fit: contain;">
+            </a>
+          </div>
+          <div class="col-9">
+            <nav class="nav justify-content-end align-items-center">
+              
+              <a href="index.html" class="nav-link text-light me-3 small">Home</a>
+              
+              <div class="nav-item dropdown">
+                <button class="btn nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-sun theme-icon-active" data-theme-icon-active="bi-sun"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <button class="dropdown-item d-flex align-items-center" type="button" data-bs-theme-value="light">
+                      <i class="bi bi-sun me-2 opacity-50" data-theme-icon="bi-sun"></i> Light
+                    </button>
+                  </li>
+                  <li> 
+                    <button class="dropdown-item d-flex align-items-center" type="button" data-bs-theme-value="dark">
+                      <i class="bi bi-moon-fill me-2 opacity-50" data-theme-icon="bi-moon-fill"></i> Dark
+                    </button>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <button class="dropdown-item d-flex align-items-center" type="button" data-bs-theme-value="auto">
+                      <i class="bi bi-circle-half me-2 opacity-50" data-theme-icon="bi-circle-half"></i> Auto
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div> 
 
     <div class="card mb-4 shadow-sm">
         <div class="card-header bg-success text-white">
@@ -20,10 +60,6 @@
         <div class="card-body">
             <form id="formTambahData" onsubmit="tambahData(event)">
                 <div class="row g-3">
-                    <div class="col-md-2">
-                        <label class="form-label">No</label>
-                        <input type="text" id="inputNo" class="form-control" placeholder="Contoh: 1" required>
-                    </div>
                     <div class="col-md-5">
                         <label class="form-label">Jenis Gangguan</label>
                         <input type="text" id="inputJenis" class="form-control" placeholder="Nama gangguan..." required>
@@ -50,8 +86,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 <script>
-    // GANTI dengan URL Web App dari Google Apps Script Anda
-    const scriptURL = 'URL_GOOGLE_APPS_SCRIPT_ANDA'; 
+    // --- KONFIGURASI URL ---
+    const spreadsheetId = '1dcO7kOygkZDbYmc8Jx28UfTLFuIVgo4pXuSTAeYnzxI';
+    const csvURL = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv`;
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyBD1djuDFui7iR7_qvsdKoQfZ4KJGrZ96SmEuXOjG0NsSfq31Hwpnzge_w7rsKYVrGvg/exec'; 
 
     function tambahData(event) {
         event.preventDefault(); // Mencegah reload halaman
@@ -61,40 +99,116 @@
         const btnSubmit = document.getElementById('btnSubmit');
         const statusInput = document.getElementById('statusInput');
 
-        // Mengaktifkan efek loading
+        // Mengaktifkan efek loading pada tombol
         btnText.innerText = "Menyimpan...";
         btnLoading.classList.remove('d-none');
         btnSubmit.disabled = true;
 
-        // Mengambil data dari input berdasarkan ID di form Anda
-        const formData = new FormData();
-        formData.append('no', document.getElementById('inputNo').value.trim());
-        formData.append('jenisGangguan', document.getElementById('inputJenis').value.trim());
-        formData.append('tindakanPerbaikan', document.getElementById('inputTindakan').value.trim());
-        formData.append('fotoUrl', document.getElementById('inputFoto').value.trim());
+        let nextNo = 1; // Default jika sheet masih kosong
 
-        fetch(scriptURL, { method: 'POST', body: formData })
+        // STEP 1: Ambil data CSV menggunakan split biasa (Tanpa parseCSVAman)
+        fetch(csvURL)
+        .then(response => {
+            if (!response.ok) throw new Error("Gagal mengecek urutan nomor terakhir di Google Sheets.");
+            return response.text();
+        })
+        .then(csvText => {
+            // Memisahkan baris berdasarkan Enter biasa
+            const barisData = csvText.split(/\r?\n/);
+            let maxNo = 0;
+
+            for (let i = 1; i < barisData.length; i++) {
+                const baris = barisData[i].trim();
+                if (baris === "") continue;
+
+                // VALIDASI REGEX: Cek apakah baris ini diawali oleh nomor murni (misal: "1", atau 1,)
+                // Ini untuk mencegah pecahan teks kalimat yang mengandung angka tidak sengaja terhitung sebagai ID
+                const kecocokanKarakter = baris.match(/^"?(\d+)"?,/);
+                
+                if (kecocokanKarakter) {
+                    // Ambil angka hasil tangkapan regex grup ke-1
+                    const num = parseInt(kecocokanKarakter[1]);
+                    if (num > maxNo) {
+                        maxNo = num;
+                    }
+                }
+            }
+            
+            // Formula Auto Increment: Angka terbesar saat ini ditambah 1
+            nextNo = maxNo + 1;
+
+            // STEP 2: Susun data baru ke FormData (Nomor otomatis dari sistem)
+            const formData = new FormData();
+            formData.append('no', nextNo); 
+            formData.append('jenisGangguan', document.getElementById('inputJenis').value.trim());
+            formData.append('tindakanPerbaikan', document.getElementById('inputTindakan').value.trim());
+            formData.append('fotoUrl', document.getElementById('inputFoto').value.trim());
+
+            // STEP 3: Kirim data ke Web App Google Apps Script via POST
+            return fetch(scriptURL, { method: 'POST', body: formData });
+        })
         .then(response => response.json())
         .then(data => {
-            // Mengembalikan tombol ke sedia kala
+            // Mengembalikan tombol ke keadaan semula
             btnText.innerText = "Simpan Data";
             btnLoading.classList.add('d-none');
             btnSubmit.disabled = false;
 
             if(data.result === "success" || data.status === "success") {
-                statusInput.innerHTML = `<div class="alert alert-success"><strong>Sukses!</strong> Data berhasil disimpan ke Google Sheets.</div>`;
+                statusInput.innerHTML = `
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Sukses!</strong> Data berhasil disimpan dengan <b>Nomor Urut: ${nextNo}</b>.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+                
                 document.getElementById('formTambahData').reset();
+
+                // Refresh tabel otomatis jika fungsi tampilkanSemuaData() tersedia di index.html Anda
+                if (typeof tampilkanSemuaData === "function") {
+                    tampilkanSemuaData();
+                }
             } else {
-                statusInput.innerHTML = `<div class="alert alert-danger">Gagal menyimpan: ${data.message || 'Terjadi kesalahan'}</div>`;
+                statusInput.innerHTML = `<div class="alert alert-danger">Gagal menyimpan: ${data.message || 'Terjadi kesalahan backend.'}</div>`;
             }
         })
         .catch(error => {
+            // Penanganan jika terjadi kendala jaringan / fetch gagal
             btnText.innerText = "Simpan Data";
             btnLoading.classList.add('d-none');
             btnSubmit.disabled = false;
-            statusInput.innerHTML = `<div class="alert alert-danger">Error Sistem: ${error.message}</div>`;
+            statusInput.innerHTML = `<div class="alert alert-danger"><strong>Error Sistem:</strong> ${error.message}</div>`;
         });
     }
 </script>
+    <script>
+      (() => {
+        'use strict'
+        const getStoredTheme = () => localStorage.getItem('theme')
+        const setStoredTheme = theme => localStorage.setItem('theme', theme)
+        const getPreferredTheme = () => {
+          const storedTheme = getStoredTheme()
+          if (storedTheme) return storedTheme
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        const setTheme = theme => {
+          if (theme === 'auto') {
+            document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+          } else {
+            document.documentElement.setAttribute('data-bs-theme', theme)
+          }
+        }
+        setTheme(getPreferredTheme())
+
+        window.addEventListener('DOMContentLoaded', () => {
+          document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+              const theme = toggle.getAttribute('data-bs-theme-value')
+              setStoredTheme(theme)
+              setTheme(theme)
+            })
+          })
+        })
+      })()
+    </script>
 </body>
 </html>

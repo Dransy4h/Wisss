@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <style>
+      .clickable {
+        cursor : pointer;
+      }
+      /* Styling tambahan untuk hasil pencarian agar rapi */
+      #hasilPencarian table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: var(--bs-body-bg);
+        color: var(--bs-body-color);
+      }
+      #hasilPencarian th, #hasilPencarian td {
+        border: 1px solid var(--bs-border-color);
+        padding: 10px;
+        text-align: left;
+      }
+      #hasilPencarian th {
+        background-color: rgba(0,0,0,0.1);
+      }
+      /* Mengatur spasi navbar agar tidak menutupi konten atas */
+      body {
+        padding-top: 80px; 
+      }
+    </style>
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Wisss</title>
+  </head>
+  <body id="home" style="background: url(asses/img/images.png);">
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary border-bottom" id="mainNavbar">
+      <div class="container-fluid px-3 px-lg-5">
+        
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="assets/img/imagees.png" alt="go RSC" class="img-logo me-Lo2" style="width: 30px;">
+        </a>
+        
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse collapse-horizontal navbar-collapse" id="navbarNav">
+          <div style="width: 250px;"> 
+            <ul class="navbar-nav ms-auto text-start mt-3 mt-lg-0 align-items-lg-center gap-2">
+              <li class="nav-item"><a class="nav-link active" href="#home">Beranda</a></li>
+              <li class="nav-item"><a class="nav-link" href="cari.html">Cari</a></li>
+              <li class="nav-item"><a class="nav-link" href="tambah.html">Input Data</a></li>
+              <li class="nav-item"><a class="nav-link" href="semua.html">Semua data</a></li>
+              <li class="nav-item"><a class="nav-link" href="tentang.html">Tentang</a></li>
+            </ul>
+          </div>
+
+          <div class="nav-item dropdown ms-lg-auto">
+            <button class="btn nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-sun theme-icon-active" data-theme-icon-active="bi-sun"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <button class="dropdown-item d-flex align-items-center" type="button" data-bs-theme-value="light">
+                  <i class="bi bi-sun me-2 opacity-50"></i> Light
+                </button>
+              </li>
+              <li> 
+                <button class="dropdown-item d-flex align-items-center" type="button" data-bs-theme-value="dark">
+                  <i class="bi bi-moon-fill me-2 opacity-50"></i> Dark
+                </button>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <button class="dropdown-item d-flex align-items-center" type="button" data-bs-theme-value="auto">
+                  <i class="bi bi-circle-half me-2 opacity-50"></i> Auto
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 text-start">
+      <div id="notifTambahData"></div>
+
+      <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+        <h5 class="m-0 fw-bold text-body"><i class="bi bi-table"></i> Data Gangguan Inverter</h5>
+        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="tampilkanSemuaData()">
+          <i class="bi bi-arrow-clockwise me-1"></i> Refresh Data
+        </button>
+      </div>
+      
+      <div id="hasilPencarian">
+        <div class="d-flex align-items-center justify-content-center my-4">
+            <div class="spinner-border text-secondary me-2" role="status"></div>
+            <span>Memuat seluruh data dari Google Sheets...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="text-center py-4 mt-5 border-top">
+  <p class="mb-0">Created with <i class="bi bi-heart-fill text-danger"></i> by Tim 5</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
+
+<script>
+// --- KONFIGURASI UTAMA GOOGLE SHEETS ---
+const spreadsheetId = '1dcO7kOygkZDbYmc8Jx28UfTLFuIVgo4pXuSTAeYnzxI';
+const csvURL = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv`;
+const scriptTambahURL = 'URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI';
+
+// =========================================================================
+// SCRIPT BARU: Fungsi Pembantu untuk Membaca CSV Secara Aman (Anti-Error Enter)
+// =========================================================================
+function parseCSVAman(text) {
+    let barisData = [];
+    let kolom = [''];
+    let diDalamKutip = false;
+
+    for (let i = 0; i < text.length; i++) {
+        let char = text[i];
+        let nextChar = text[i + 1];
+
+        if (char === '"') {
+            if (diDalamKutip && nextChar === '"') {
+                kolom[kolom.length - 1] += '"';
+                i++;
+            } else {
+                diDalamKutip = !diDalamKutip;
+            }
+        } else if (char === ',' && !diDalamKutip) {
+            kolom.push('');
+        } else if ((char === '\r' || char === '\n') && !diDalamKutip) {
+            if (char === '\r' && nextChar === '\n') i++;
+            barisData.push(kolom);
+            kolom = [''];
+        } else {
+            kolom[kolom.length - 1] += char;
+        }
+    }
+    if (kolom.length > 1 || kolom[0] !== '') {
+        barisData.push(kolom);
+    }
+    return barisData;
+}
+
+// --- FUNGSI 1: CARI DATA ---
+function cariGangguan() {
+    const keyword = document.getElementById('keyword').value.trim().toLowerCase();
+    const hasilDiv = document.getElementById('hasilPencarian');
+
+    if (keyword === "") {
+        alert("Silakan masukkan kata kunci pencarian terlebih dahulu!");
+        return;
+    }
+
+    hasilDiv.innerHTML = `
+        <div class="d-flex align-items-center justify-content-center my-4">
+            <div class="spinner-border text-primary me-2" role="status"></div>
+            <span>Mencari data...</span>
+        </div>`;
+
+    fetch(csvURL)
+    .then(response => {
+        if (!response.ok) throw new Error("Gagal mengunduh basis data CSV.");
+        return response.text();
+    })
+    .then(csvText => {
+        const semuaBaris = parseCSVAman(csvText);
+        let htmlTabel = buatHeaderTabel();
+        let jumlahDataFound = 0;
+
+        for (let i = 1; i < semuaBaris.length; i++) {
+            const kolom = semuaBaris[i];
+            if (kolom.length < 2 || kolom[0].trim() === "") continue;
+
+            const no = kolom[0].replace(/\s+/g, ' ').trim();
+           const jenisGangguan = kolom[1].replace(/\s+/g, ' ').trim();
+            const tindakanPerbaikan = (kolom[2] || '').replace(/\s+/g, ' ').trim();
+            const dataFoto = (kolom[3] || '').replace(/\s+/g, ' ').trim();
+
+            if (jenisGangguan.toLowerCase().includes(keyword) || tindakanPerbaikan.toLowerCase().includes(keyword)) {
+                let tombolFoto = buatTombolFoto(dataFoto);
+                htmlTabel += `<tr>
+                                <td class="text-center">${no}</td>
+                                <td>${jenisGangguan}</td>
+                                <td>${tindakanPerbaikan}</td>
+                                <td class="text-center">${tombolFoto}</td>
+                              </tr>`;
+                jumlahDataFound++;
+            }
+        }
+
+        htmlTabel += `</tbody></table></div>`;
+
+        if (jumlahDataFound > 0) {
+            hasilDiv.innerHTML = htmlTabel + `<div class="small text-muted mt-2 text-end">Ditemukan <strong>${jumlahDataFound}</strong> hasil untuk kata kunci "${keyword}".</div>`;
+        } else {
+            hasilDiv.innerHTML = `<div class="alert alert-warning m-0">Data tidak ditemukan untuk kata kunci: "<strong>${keyword}</strong>".</div>`;
+        }
+    })
+    .catch(error => {
+        hasilDiv.innerHTML = `<div class="alert alert-danger m-0"><strong>Error:</strong> ${error.message}</div>`;
+    });
+}
+
+// --- FUNGSI 2: TAMPILKAN SEMUA DATA ---
+function tampilkanSemuaData() {
+    const hasilDiv = document.getElementById('hasilPencarian');
+    
+    hasilDiv.innerHTML = `
+        <div class="d-flex align-items-center justify-content-center my-4">
+            <div class="spinner-border text-secondary me-2" role="status"></div>
+            <span>Memuat seluruh data dari Google Sheets...</span>
+        </div>`;
+
+    fetch(csvURL)
+    .then(response => {
+        if (!response.ok) throw new Error("Gagal memuat rekap data.");
+        return response.text();
+    })
+    .then(csvText => {
+        const semuaBaris = parseCSVAman(csvText);
+        
+        if (semuaBaris.length <= 1) {
+            hasilDiv.innerHTML = `<div class="alert alert-warning m-0">Tidak ada data di dalam Spreadsheet.</div>`;
+            return;
+        }
+
+        let htmlTabel = buatHeaderTabel();
+        let jumlahData = 0;
+
+        for (let i = 1; i < semuaBaris.length; i++) {
+            const kolom = semuaBaris[i];
+            if (kolom.length < 2 || kolom[0].trim() === "") continue;
+
+            const no = kolom[0].replace(/\s+/g, ' ').trim();
+            const jenisGangguan = kolom[1].replace(/\s+/g, ' ').trim();
+            const tindakanPerbaikan = (kolom[2] || '').replace(/\s+/g, ' ').trim();
+            const dataFoto = (kolom[3] || '').replace(/\s+/g, ' ').trim();
+
+            let tombolFoto = buatTombolFoto(dataFoto);
+
+            htmlTabel += `<tr>
+                            <td class="text-center">${no}</td>
+                            <td>${jenisGangguan}</td>
+                            <td>${tindakanPerbaikan}</td>
+                            <td class="text-center">${tombolFoto}</td>
+                          </tr>`;
+            jumlahData++;
+        }
+
+        htmlTabel += `</tbody></table></div>`;
+        hasilDiv.innerHTML = htmlTabel + `<div class="small text-muted mt-2 text-end">Total: <strong>${jumlahData}</strong> data berhasil dimuat.</div>`;
+    })
+    .catch(error => {
+        hasilDiv.innerHTML = `<div class="alert alert-danger m-0"><strong>Gagal memuat data!</strong> ${error.message}</div>`;
+    });
+}
+
+// --- FUNGSI PEMBANTU UTILITY ---
+function buatHeaderTabel() {
+    return `
+        <div class="table-responsive shadow-sm rounded border bg-body">
+            <table class="table table-striped table-hover align-middle mb-0 text-start">
+                <thead class="table-light text-black">
+                    <tr>
+                        <th style="width: 8%" class="text-center">No</th>
+                        <th style="width: 32%">Jenis Gangguan</th>
+                        <th style="width: 48%">Tindakan Perbaikan</th>
+                        <th style="width: 12%" class="text-center">Foto</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+}
+
+function buatTombolFoto(dataFoto) {
+    if (!dataFoto) return '<span class="text-muted small">-</span>';
+    
+    if (dataFoto.startsWith('http')) {
+        return `<a href="${dataFoto}" target="_blank" class="btn btn-primary btn-sm py-0 px-2" style="font-size: 12px;"><i class="bi bi-image"></i> Lihat</a>`;
+    } else {
+        return `<a href="assets/img/${dataFoto}" target="_blank" class="btn btn-primary btn-sm py-0 px-2" style="font-size: 12px;"><i class="bi bi-image"></i> Lihat</a>`;
+    }
+}
+
+// =========================================================================
+// PERUBAHAN UTAMA: Menjalankan fungsi tampilkanSemuaData() otomatis saat page load
+// =========================================================================
+document.addEventListener('DOMContentLoaded', tampilkanSemuaData);
+</script>
+
+<script>
+      // 2. SKRIP PEMILIH TEMA (DARK/LIGHT MODE)
+      (() => {
+        'use strict'
+        const getStoredTheme = () => localStorage.getItem('theme')
+        const setStoredTheme = theme => localStorage.setItem('theme', theme)
+        const getPreferredTheme = () => {
+          const storedTheme = getStoredTheme()
+          if (storedTheme) return storedTheme
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        const setTheme = theme => {
+          if (theme === 'auto') {
+            document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+          } else {
+            document.documentElement.setAttribute('data-bs-theme', theme)
+          }
+        }
+        setTheme(getPreferredTheme())
+
+        window.addEventListener('DOMContentLoaded', () => {
+          document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+              const theme = toggle.getAttribute('data-bs-theme-value')
+              setStoredTheme(theme)
+              setTheme(theme)
+            })
+          })
+        })
+      })()
+
+      // 3. ANIMASI (AOS & GSAP)
+      AOS.init({ once: true, duration: 1500 });
+      if (document.querySelector('.display-4')) {
+        gsap.from('.display-4', { delay: 0.5, duration: 1, opacity: 0, x: '-10%' });
+      }
+    </script>
+  </body>
+</html>

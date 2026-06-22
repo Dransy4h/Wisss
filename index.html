@@ -88,19 +88,20 @@
     
 
     <section class="jumbotron text-center" style="padding-top: 8rem;">
-      <h1 class="display-1">WISSS</h1>
+  <img src="assets/img/wisss.png" class="rounded rounded-5" alt="">
       <h2 class="display-4">WIS Sekali Search!</h2>
       
     </section>
 
-<p class="display-5">Winder Inverter System(WIS) adalah sistem kontrol penggerak motor (menggunakan inverter) yang dirancang khusus untuk mengatur proses penggulungan (winder) atau pelepasan (unwinder) gulungan material.
-   Sistem ini umum digunakan pada industri tekstil, pengemasan (kertas/plastik), manufaktur kabel, dan pengolahan logam. Fungsi dan Cara KerjaSistem ini menggunakan Variable Frequency Drive (VFD) atau inverter untuk mengatur kecepatan motor.
-    Fungsi utamanya meliputi:Kontrol Tegangan (Tension Control): Menjaga ketegangan material (seperti benang, kertas, atau foil) agar tetap konstan saat digulung, sehingga tidak mudah putus atau terlalu kendur.Penyesuaian Diameter Otomatis: Saat gulungan membesar, inverter secara otomatis menurunkan kecepatan putaran motor (RPM) agar kecepatan linear material tetap stabil.Operasi yang Mulus: Mencegah hentakan atau tarikan tiba-tiba pada awal maupun akhir proses penggulungan.</p>
+<p class="display-5" style="text-align: justify;">Winder Inverter System(WIS) adalah sistem kontrol penggerak motor (menggunakan inverter) yang dirancang khusus untuk mengatur proses penggulungan (winder) atau pelepasan (unwinder) gulungan material. <br>
+   Sistem ini umum digunakan pada industri tekstil, pengemasan (kertas/plastik), manufaktur kabel, dan pengolahan logam. Fungsi dan Cara KerjaSistem ini menggunakan Variable Frequency Drive (VFD) atau inverter untuk mengatur kecepatan motor. <br>
+    Fungsi utamanya meliputi:Kontrol Tegangan (Tension Control): Menjaga ketegangan material (seperti benang, kertas, atau foil) agar tetap konstan saat digulung, sehingga tidak mudah putus atau terlalu kendur.
+    <br>Penyesuaian Diameter Otomatis: Saat gulungan membesar, inverter secara otomatis menurunkan kecepatan putaran motor (RPM) agar kecepatan linear material tetap stabil.Operasi yang Mulus: Mencegah hentakan atau tarikan tiba-tiba pada awal maupun akhir proses penggulungan.</p>
       
 <div class="card mb-3">
   <img src="assets/img/i.png" class="card-img-top" alt="...">
   <div class="card-body">
-    <p class="card-text">Inverter adalah rangkaian elektronik daya yang digunakan untuk mengonversikan tegangan searah (DC) ke suatu tegangan bolak-balik (AC). Ada beberapa jenis inverter yang ada sekarang ini, dari yang hanya menghasilkan tegangan keluaran kotak bolak-balik, sampai yang sudah bisa menghasilkan tegangan sinus murni tanp harmonisa. Inverter satu phasa, tiga phasa sampai dengan multi phasa dan ada juga yang namanya inverter multi level.
+    <p class="card-text" style="text-align: justify;">Inverter adalah rangkaian elektronik daya yang digunakan untuk mengonversikan tegangan searah (DC) ke suatu tegangan bolak-balik (AC). Ada beberapa jenis inverter yang ada sekarang ini, dari yang hanya menghasilkan tegangan keluaran kotak bolak-balik, sampai yang sudah bisa menghasilkan tegangan sinus murni tanpa harmonisa. Inverter satu phasa, tiga phasa sampai dengan multi phasa dan ada juga yang namanya inverter multi level.
 Ada beberapa cara teknik kendali yang digunakan agar inverter mampu menghasilkan sinyal sinusoidal, yang paling sederhana adalah dengan cara mengatur keterlambatan sudut penyalaan inverter di tiap lengannya.
 Rumus dasar dari Inverter Barmag WIS: 
 
@@ -136,13 +137,13 @@ Rumus dasar dari Inverter Barmag WIS:
       </div>
       <div class="card">
         <h5>DC Bus</h5>
-        <p>	Komponen DC Bus terdiri atas electrolit condensor (ELCO) dengan kapasitas dan rating tegangan yang sesuai dengan kapasitas dari inverter. Tegangan DC yang dihasilkan oleh rectifier akan di filter sehingga dihasilkan tegangan DC yang lebih murni tanpa ada noise atau cacat. Elco pada DC Bus berfungsi menyimpan muatan listrik yang telah disearahkan oleh rectifier. Penyimpanan muatan listrik pada DC Bus bertujuan agar ketika tegangan DC ini digunakan, akan lebih stabil tidak akan secara langsung membebani bagian rectifier. </p>
+        <p style="text-align: justify;">	Komponen DC Bus terdiri atas electrolit condensor (ELCO) dengan kapasitas dan rating tegangan yang sesuai dengan kapasitas dari inverter. Tegangan DC yang dihasilkan oleh rectifier akan di filter sehingga dihasilkan tegangan DC yang lebih murni tanpa ada noise atau cacat. Elco pada DC Bus berfungsi menyimpan muatan listrik yang telah disearahkan oleh rectifier. Penyimpanan muatan listrik pada DC Bus bertujuan agar ketika tegangan DC ini digunakan, akan lebih stabil tidak akan secara langsung membebani bagian rectifier. </p>
         <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
         <img src="assets/img/dcc.png" alt="">
         </div>
-        <p>Penyimpanan listrik pada elco dapat diibaratkan sebagai penyimpanan tangki air. Tanpa penampungan, aliran air langsung dari sumber akan mengecil dan membebani sumber itu sendiri. 
+        <p style="text-align: justify;">Penyimpanan listrik pada elco dapat diibaratkan sebagai penyimpanan tangki air. Tanpa penampungan, aliran air langsung dari sumber akan mengecil dan membebani sumber itu sendiri. 
 Begitu pula dengan mekanisme yang terjadi pada DC Bus ini.
-<p>Besarnya muatan listrik yang disimpan di dalam kapasitor adalah:
+<p style="text-align: justify;">Besarnya muatan listrik yang disimpan di dalam kapasitor adalah:
 		Q = C x V 	
 Dengan keterangan
 Q = Nilai muatan elektron listrik dalam satuan coulumb (C).
@@ -150,9 +151,19 @@ C = Nilai kapasitansi dalam satuan (F).
 V = Besar tegangan dalam satuan Volt (V).</p>
 	Tegangan DC link yang disimpan kurang lebih 560 VDC, sehigga inverter aman untuk dioperasikan.
 </p>
+        <div class="card">
+          <h5>Insulated Gate Bipolar Transistor</h5>
+          <p style="text-align: justify;">Insulated Gate Bipolar Transistor (IGBT) adalah komponen semikonduktor daya utama yang bertindak sebagai sakelar elektronik berkecepatan tinggi dalam rangkaian daya sirkuit inverter. Komponen ini merupakan perangkat hibrida pintar yang menggabungkan keunggulan dari dua teknologi transistor sekaligus, yaitu karakteristik impedansi masukan yang sangat tinggi dari MOSFET pada terminal gate-nya, serta kemampuan menghantarkan arus besar dengan tegangan saturasi rendah yang dimiliki oleh Transistor Bipolar (BJT) pada terminal kolektor dan emitornya. Berkat kombinasi unik ini, IGBT mampu menangani daya, tegangan, dan arus listrik yang sangat besar namun hanya memerlukan daya kemudi yang sangat kecil dari driver card. Karakteristik ini menjadikannya pilihan utama untuk aplikasi industri berat karena mampu meminimalkan rugi-rugi daya (power losses) dan menekan produksi panas berlebih selama proses konversi energi berlangsung. 
+          </p>
+          <img src="assets/img/igbt.jpg" style="width: 600px;" alt="">
+          <p style="text-align: justify;">Dalam arsitektur inverter tiga fase, komponen IGBT biasanya disusun dalam konfigurasi jembatan (bridge circuit) yang terdiri dari enam buah unit terintegrasi untuk mengendalikan aliran daya ke setiap fase motor. Setiap unit IGBT akan merespons pulsa kendali PWM (Pulse Width Modulation) yang dikirimkan oleh driver card berdasarkan instruksi CPU untuk melakukan proses pensaklaran (membuka dan menutup aliran arus) dalam frekuensi tinggi hingga mencapai puluhan kilohertz. Proses pensaklaran yang super cepat ini berfungsi untuk memotong tegangan searah dari saluran utama (DC Bus) dan menyusunnya kembali menjadi pulsa-pulsa tegangan AC tiruan pada terminal keluaran U, V, dan W. 
+          </p>
+          <p style="text-align: justify;">Kemampuan IGBT dalam melakukan transisi kondisi ON ke OFF secara instan dan presisi inilah yang memastikan bentuk gelombang keluaran tetap halus, sehingga motor listrik dapat berputar dengan efisiensi tinggi, torsi yang stabil, dan kecepatan yang dapat diatur secara akurat. 
+          </p>
+        </div>
       </div>
     <footer class="text-center py-4">
-      <p>Created with <i class="bi bi-heart-fill text-danger"></i> by Tim 5</p>
+      <p>Created with <i class="bi bi-heart-fill text-danger"></i> bye</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
